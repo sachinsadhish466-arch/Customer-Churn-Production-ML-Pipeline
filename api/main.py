@@ -1,15 +1,25 @@
 from fastapi import FastAPI, HTTPException, Request
+import time
 
 import pandas as pd
 
 from api.schemas import (
     CustomerData,
-    PredictionResponse
+    PredictionResponse,
+    MonitoringResponse
 )
 
 from src.pipeline import ChurnPipeline
+
 from src.utils.logger import get_logger
 from src.utils.request_id import generate_request_id
+
+from src.monitoring.prediction_logger import log_prediction
+
+from src.monitoring.prediction_monitor import (
+    load_prediction_logs,
+    calculate_monitoring_metrics
+)
 
 
 app = FastAPI(
@@ -23,7 +33,10 @@ logger = get_logger(__name__)
 
 
 @app.middleware("http")
-async def add_request_id(request: Request, call_next):
+async def add_request_id(
+    request: Request,
+    call_next
+):
 
     request_id = generate_request_id()
 
@@ -91,6 +104,60 @@ def health_check():
     }
 
 
+@app.get(
+    "/monitoring",
+    response_model=MonitoringResponse
+)
+def monitoring_metrics(
+    request: Request
+):
+
+    request_id = getattr(
+        request.state,
+        "request_id",
+        "unknown"
+    )
+
+    logger.info(
+        "Monitoring metrics requested | request_id=%s",
+        request_id
+    )
+
+    try:
+
+        prediction_logs = load_prediction_logs()
+
+        metrics = calculate_monitoring_metrics(
+            prediction_logs
+        )
+
+        logger.info(
+            "Monitoring metrics calculated | request_id=%s | total_predictions=%s | churn_predictions=%s",
+            request_id,
+            metrics["total_predictions"],
+            metrics["churn_predictions"]
+        )
+
+        return MonitoringResponse(
+            **metrics
+        )
+
+    except Exception:
+
+        logger.exception(
+            "Monitoring metrics failed | request_id=%s",
+            request_id
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": "Monitoring service encountered an internal error.",
+                "request_id": request_id
+            }
+        )
+
+
 @app.post(
     "/predict",
     response_model=PredictionResponse
@@ -121,9 +188,16 @@ def predict_churn(
             [customer_data]
         )
 
+        prediction_start_time = time.perf_counter()
+
         predictions, probabilities = (
             pipeline.predict(input_df)
         )
+
+        latency_ms = (
+            time.perf_counter()
+            - prediction_start_time
+        ) * 1000
 
         prediction = int(
             predictions[0]
@@ -140,11 +214,21 @@ def predict_churn(
         )
 
         logger.info(
-            "Prediction completed | request_id=%s | prediction=%s | probability=%.4f | label=%s",
+            "Prediction completed | request_id=%s | prediction=%s | probability=%.4f | latency_ms=%.2f | label=%s",
             request_id,
             prediction,
             probability,
+            latency_ms,
             prediction_label
+        )
+
+        log_prediction(
+            request_id=request_id,
+            prediction=prediction,
+            probability=probability,
+            threshold=pipeline.predictor.threshold,
+            prediction_label=prediction_label,
+            latency_ms=latency_ms
         )
 
         return PredictionResponse(
