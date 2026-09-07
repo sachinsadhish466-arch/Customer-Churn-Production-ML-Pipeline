@@ -5,17 +5,15 @@ from src.models.model_predictor import ChurnPredictor
 
 
 class ChurnPipeline:
-    """
-    End-to-end customer churn inference pipeline.
-    """
 
-    def __init__(self):
-        self.predictor = ChurnPredictor()
+    def __init__(self, predictor=None):
+
+        if predictor is not None:
+            self.predictor = predictor
+        else:
+            self.predictor = ChurnPredictor()
 
     def prepare_data(self, df):
-        """
-        Validate, clean, and engineer features.
-        """
 
         validate_data(
             df,
@@ -29,13 +27,9 @@ class ChurnPipeline:
         return df
 
     def predict(self, df):
-        """
-        Run the complete customer churn prediction pipeline.
-        """
 
         df = self.prepare_data(df)
 
-        # API inference data does not contain Churn.
         X = df.copy()
 
         predictions, probabilities = (
