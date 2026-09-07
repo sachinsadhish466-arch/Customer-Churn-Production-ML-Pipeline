@@ -9,6 +9,7 @@ from api.schemas import (
 
 from src.pipeline import ChurnPipeline
 from src.utils.logger import get_logger
+from src.utils.request_id import generate_request_id
 
 
 app = FastAPI(
@@ -21,6 +22,44 @@ app = FastAPI(
 logger = get_logger(__name__)
 
 
+@app.middleware("http")
+async def add_request_id(request, call_next):
+
+    request_id = generate_request_id()
+
+    request.state.request_id = request_id
+
+    logger.info(
+        "Request started | request_id=%s | method=%s | path=%s",
+        request_id,
+        request.method,
+        request.url.path
+    )
+
+    try:
+
+        response = await call_next(request)
+
+        response.headers["X-Request-ID"] = request_id
+
+        logger.info(
+            "Request completed | request_id=%s | status_code=%s",
+            request_id,
+            response.status_code
+        )
+
+        return response
+
+    except Exception:
+
+        logger.exception(
+            "Request failed | request_id=%s",
+            request_id
+        )
+
+        raise
+
+
 churn_pipeline = None
 
 
@@ -29,7 +68,11 @@ def get_churn_pipeline():
     global churn_pipeline
 
     if churn_pipeline is None:
-        logger.info("Initializing churn prediction pipeline")
+
+        logger.info(
+            "Initializing churn prediction pipeline"
+        )
+
         churn_pipeline = ChurnPipeline()
 
     return churn_pipeline
@@ -38,7 +81,9 @@ def get_churn_pipeline():
 @app.get("/health")
 def health_check():
 
-    logger.info("Health check requested")
+    logger.info(
+        "Health check requested"
+    )
 
     return {
         "status": "healthy",
@@ -52,7 +97,15 @@ def health_check():
 )
 def predict_churn(customer: CustomerData):
 
-    logger.info("Prediction request received")
+    request_id = getattr(
+        getattr(customer, "__dict__", {}),
+        "request_id",
+        None
+    )
+
+    logger.info(
+        "Prediction request received"
+    )
 
     try:
 
