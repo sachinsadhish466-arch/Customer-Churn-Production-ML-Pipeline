@@ -1,0 +1,182 @@
+# ============================================================
+# Customer Churn Production ML Pipeline
+# Git Ignore Configuration
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Python
+# ------------------------------------------------------------
+
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Python virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test / coverage files
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.pyre/
+.mypy_cache/
+.ruff_cache/
+
+
+# ------------------------------------------------------------
+# Jupyter Notebook
+# ------------------------------------------------------------
+
+.ipynb_checkpoints/
+
+# Jupyter temporary files
+*.ipynb_checkpoints
+
+
+# ------------------------------------------------------------
+# Environment Variables & Secrets
+# ------------------------------------------------------------
+
+.env
+.env.*
+!.env.example
+
+# Local secret/config files
+secrets/
+*.secret
+*.key
+*.pem
+
+
+# ------------------------------------------------------------
+# Data
+# ------------------------------------------------------------
+
+# Raw datasets
+data/raw/*
+
+# Processed datasets
+data/processed/*
+
+# Keep directory structure in Git
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+
+# ------------------------------------------------------------
+# Machine Learning Artifacts
+# ------------------------------------------------------------
+
+# Trained model files
+models/*.pkl
+models/*.joblib
+models/*.pickle
+
+# MLflow local tracking data
+mlruns/
+
+# MLflow artifacts
+mlartifacts/
+
+# Model experiment outputs
+model_outputs/
+experiments/
+
+
+# ------------------------------------------------------------
+# Logs
+# ------------------------------------------------------------
+
+*.log
+logs/
+
+
+# ------------------------------------------------------------
+# Temporary Files
+# ------------------------------------------------------------
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+
+
+# ------------------------------------------------------------
+# IDE / Editor
+# ------------------------------------------------------------
+
+.vscode/
+.idea/
+
+# VS Code local settings
+*.code-workspace
+
+
+# ------------------------------------------------------------
+# Streamlit
+# ------------------------------------------------------------
+
+.streamlit/secrets.toml
+
+
+# ------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------
+
+# Docker local override files
+docker-compose.override.yml
+
+
+# ------------------------------------------------------------
+# Database / Local Development
+# ------------------------------------------------------------
+
+*.db
+*.sqlite
+*.sqlite3
+
+
+# ------------------------------------------------------------
+# Reports / Generated Outputs
+# ------------------------------------------------------------
+
+reports/generated/
+outputs/
+
+
+# ------------------------------------------------------------
+# System Files
+# ------------------------------------------------------------
+
+$RECYCLE.BIN/
+System Volume Information/
+
+
+# ------------------------------------------------------------
+# Local Configuration
+# ------------------------------------------------------------
+
+# Local-only configuration
+config.local.yaml
+config.local.yml

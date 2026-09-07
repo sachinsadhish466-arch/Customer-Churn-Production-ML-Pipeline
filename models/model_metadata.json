@@ -1,0 +1,10 @@
+{
+    "model_type": "XGBoost",
+    "threshold": 0.5,
+    "cv_roc_auc": 0.8492456522510834,
+    "test_accuracy": 0.759403832505323,
+    "test_precision": 0.5307557117750439,
+    "test_recall": 0.8074866310160428,
+    "test_f1": 0.6405090137857901,
+    "test_roc_auc": 0.8478286703350641
+}
