@@ -121,6 +121,7 @@ def test_monitoring_endpoint():
         "churn_prediction_rate": 0.4,
         "average_churn_probability": 0.4235,
         "high_risk_predictions": 3,
+        "high_risk_prediction_rate": 0.3,
         "average_latency_ms": 27.50
     }
 
@@ -172,6 +173,11 @@ def test_monitoring_endpoint():
     assert (
         data["high_risk_predictions"]
         == 3
+    )
+
+    assert (
+        data["high_risk_prediction_rate"]
+        == 0.3
     )
 
     assert (

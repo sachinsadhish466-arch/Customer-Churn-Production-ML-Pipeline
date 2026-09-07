@@ -37,4 +37,5 @@ class MonitoringResponse(BaseModel):
     churn_prediction_rate: float = Field(ge=0, le=1)
     average_churn_probability: float = Field(ge=0, le=1)
     high_risk_predictions: int
+    high_risk_prediction_rate: float = Field(ge=0, le=1)
     average_latency_ms: float = Field(ge=0)

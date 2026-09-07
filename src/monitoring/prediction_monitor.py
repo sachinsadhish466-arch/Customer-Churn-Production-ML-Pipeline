@@ -85,6 +85,7 @@ def calculate_monitoring_metrics(
             "churn_prediction_rate": 0.0,
             "average_churn_probability": 0.0,
             "high_risk_predictions": 0,
+            "high_risk_prediction_rate": 0.0,
             "average_latency_ms": 0.0
         }
 
@@ -108,6 +109,10 @@ def calculate_monitoring_metrics(
 
     high_risk_predictions = int(
         (df["probability"] >= 0.70).sum()
+    )
+
+    high_risk_prediction_rate = (
+        high_risk_predictions / total_predictions
     )
 
     if "latency_ms" in df.columns:
@@ -144,6 +149,10 @@ def calculate_monitoring_metrics(
             4
         ),
         "high_risk_predictions": high_risk_predictions,
+        "high_risk_prediction_rate": round(
+            high_risk_prediction_rate,
+            4
+        ),
         "average_latency_ms": round(
             average_latency_ms,
             2

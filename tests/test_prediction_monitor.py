@@ -51,6 +51,8 @@ def test_calculate_monitoring_metrics():
 
     assert metrics["high_risk_predictions"] == 2
 
+    assert metrics["high_risk_prediction_rate"] == 0.6667
+
     assert metrics["average_latency_ms"] == 30.0
 
 
@@ -71,6 +73,8 @@ def test_empty_monitoring_data():
     assert metrics["average_churn_probability"] == 0.0
 
     assert metrics["high_risk_predictions"] == 0
+
+    assert metrics["high_risk_prediction_rate"] == 0.0
 
     assert metrics["average_latency_ms"] == 0.0
 
@@ -93,3 +97,5 @@ def test_monitoring_metrics_support_old_logs():
     assert metrics["total_predictions"] == 1
 
     assert metrics["average_latency_ms"] == 0.0
+
+    assert metrics["high_risk_prediction_rate"] == 1.0
