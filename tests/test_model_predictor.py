@@ -1,11 +1,20 @@
 import pandas as pd
 
 from src.models.model_predictor import ChurnPredictor
+from tests.test_doubles import FakeChurnModel
+
+
+def create_test_predictor():
+
+    return ChurnPredictor(
+        model=FakeChurnModel(),
+        threshold=0.5
+    )
 
 
 def test_model_loads():
 
-    predictor = ChurnPredictor()
+    predictor = create_test_predictor()
 
     assert predictor.model is not None
     assert predictor.threshold is not None
@@ -13,7 +22,7 @@ def test_model_loads():
 
 def test_prediction_probability():
 
-    predictor = ChurnPredictor()
+    predictor = create_test_predictor()
 
     df = pd.DataFrame([
         {
@@ -48,7 +57,7 @@ def test_prediction_probability():
 
 def test_prediction_output():
 
-    predictor = ChurnPredictor()
+    predictor = create_test_predictor()
 
     df = pd.DataFrame([
         {

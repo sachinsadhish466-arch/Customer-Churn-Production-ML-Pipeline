@@ -1,7 +1,15 @@
 from fastapi.testclient import TestClient
 
 from api.main import app
+from api.main import churn_pipeline
+from src.models.model_predictor import ChurnPredictor
+from tests.test_doubles import FakeChurnModel
 
+
+churn_pipeline.predictor = ChurnPredictor(
+    model=FakeChurnModel(),
+    threshold=0.5
+)
 
 client = TestClient(app)
 
