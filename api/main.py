@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 
 import pandas as pd
 
@@ -23,7 +23,7 @@ logger = get_logger(__name__)
 
 
 @app.middleware("http")
-async def add_request_id(request, call_next):
+async def add_request_id(request: Request, call_next):
 
     request_id = generate_request_id()
 
@@ -95,16 +95,20 @@ def health_check():
     "/predict",
     response_model=PredictionResponse
 )
-def predict_churn(customer: CustomerData):
+def predict_churn(
+    request: Request,
+    customer: CustomerData
+):
 
     request_id = getattr(
-        getattr(customer, "__dict__", {}),
+        request.state,
         "request_id",
-        None
+        "unknown"
     )
 
     logger.info(
-        "Prediction request received"
+        "Prediction request received | request_id=%s",
+        request_id
     )
 
     try:
@@ -136,7 +140,8 @@ def predict_churn(customer: CustomerData):
         )
 
         logger.info(
-            "Prediction completed | prediction=%s | probability=%.4f | label=%s",
+            "Prediction completed | request_id=%s | prediction=%s | probability=%.4f | label=%s",
+            request_id,
             prediction,
             probability,
             prediction_label
@@ -159,13 +164,17 @@ def predict_churn(customer: CustomerData):
             )
         )
 
-    except Exception as error:
+    except Exception:
 
         logger.exception(
-            "Prediction failed"
+            "Prediction failed | request_id=%s",
+            request_id
         )
 
         raise HTTPException(
             status_code=500,
-            detail=f"Prediction failed: {str(error)}"
+            detail={
+                "message": "Prediction service encountered an internal error.",
+                "request_id": request_id
+            }
         )
