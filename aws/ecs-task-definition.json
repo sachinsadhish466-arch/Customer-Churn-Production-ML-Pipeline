@@ -6,11 +6,11 @@
   ],
   "cpu": "512",
   "memory": "1024",
-  "executionRoleArn": "arn:aws:iam::<AWS_ACCOUNT_ID>:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::275956851378:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "name": "customer-churn-api",
-      "image": "<AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/customer-churn-api:latest",
+      "image": "275956851378.dkr.ecr.ap-south-1.amazonaws.com/customer-churn-production-ml-pipeline:latest",
       "essential": true,
       "portMappings": [
         {
@@ -28,18 +28,18 @@
       "healthCheck": {
         "command": [
           "CMD-SHELL",
-          "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\" || exit 1"
+          "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/ready')\" || exit 1"
         ],
         "interval": 30,
         "timeout": 10,
         "retries": 3,
-        "startPeriod": 30
+        "startPeriod": 60
       },
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "/ecs/customer-churn-api",
-          "awslogs-region": "<AWS_REGION>",
+          "awslogs-region": "ap-south-1",
           "awslogs-stream-prefix": "ecs"
         }
       }

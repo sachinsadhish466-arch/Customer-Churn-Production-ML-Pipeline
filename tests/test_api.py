@@ -12,9 +12,9 @@ from src.pipeline import ChurnPipeline
 from tests.test_doubles import FakeChurnModel
 
 
-# ---------------------------------------------------------
+# =========================================================
 # Test Pipeline Setup
-# ---------------------------------------------------------
+# =========================================================
 
 api_main.churn_pipeline = ChurnPipeline(
     predictor=ChurnPredictor(
@@ -29,9 +29,9 @@ client = TestClient(
 )
 
 
-# ---------------------------------------------------------
+# =========================================================
 # Health Endpoint Test
-# ---------------------------------------------------------
+# =========================================================
 
 def test_health_check():
 
@@ -53,31 +53,87 @@ def test_health_check():
     assert "X-Request-ID" in response.headers
 
 
-# ---------------------------------------------------------
+# =========================================================
+# Readiness Endpoint Test
+# =========================================================
+
+def test_readiness_check():
+
+    response = client.get(
+        "/ready"
+    )
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert (
+        data["status"]
+        == "ready"
+    )
+
+    assert (
+        data["service"]
+        == "customer-churn-prediction-api"
+    )
+
+    assert (
+        data["model_loaded"]
+        is True
+    )
+
+    assert (
+        data["threshold_loaded"]
+        is True
+    )
+
+    assert "X-Request-ID" in response.headers
+
+
+# =========================================================
 # Prediction Endpoint Test
-# ---------------------------------------------------------
+# =========================================================
 
 def test_predict_endpoint():
 
     customer_data = {
+
         "gender": "Male",
+
         "SeniorCitizen": 0,
+
         "Partner": "Yes",
+
         "Dependents": "No",
+
         "tenure": 12,
+
         "PhoneService": "Yes",
+
         "MultipleLines": "No",
+
         "InternetService": "Fiber optic",
+
         "OnlineSecurity": "No",
+
         "OnlineBackup": "Yes",
+
         "DeviceProtection": "No",
+
         "TechSupport": "No",
+
         "StreamingTV": "Yes",
+
         "StreamingMovies": "Yes",
+
         "Contract": "Month-to-month",
+
         "PaperlessBilling": "Yes",
+
         "PaymentMethod": "Electronic check",
+
         "MonthlyCharges": 75.50,
+
         "TotalCharges": 906.00
     }
 
@@ -90,7 +146,10 @@ def test_predict_endpoint():
 
     data = response.json()
 
-    assert data["churn_prediction"] == 1
+    assert (
+        data["churn_prediction"]
+        == 1
+    )
 
     assert (
         data["churn_probability"]
@@ -110,20 +169,28 @@ def test_predict_endpoint():
     assert "X-Request-ID" in response.headers
 
 
-# ---------------------------------------------------------
+# =========================================================
 # Monitoring Endpoint Test
-# ---------------------------------------------------------
+# =========================================================
 
 def test_monitoring_endpoint():
 
     fake_metrics = {
+
         "total_predictions": 10,
+
         "churn_predictions": 4,
+
         "stay_predictions": 6,
+
         "churn_prediction_rate": 0.4,
+
         "average_churn_probability": 0.4235,
+
         "high_risk_predictions": 3,
+
         "high_risk_prediction_rate": 0.3,
+
         "average_latency_ms": 27.50
     }
 
@@ -190,44 +257,66 @@ def test_monitoring_endpoint():
     assert "X-Request-ID" in response.headers
 
 
-# ---------------------------------------------------------
+# =========================================================
 # Drift Monitoring Endpoint Test
-# ---------------------------------------------------------
+# =========================================================
 
 def test_drift_endpoint():
 
     fake_reference_stats = pd.DataFrame([
+
         {
             "feature": "tenure",
+
             "mean": 32.37,
+
             "std": 24.56,
+
             "min": 0.0,
+
             "max": 72.0
         },
+
         {
             "feature": "MonthlyCharges",
+
             "mean": 64.76,
+
             "std": 30.09,
+
             "min": 18.25,
+
             "max": 118.75
         },
+
         {
             "feature": "TotalCharges",
+
             "mean": 2279.73,
+
             "std": 2266.79,
+
             "min": 0.0,
+
             "max": 8684.8
         },
+
         {
             "feature": "AverageMonthlySpend",
+
             "mean": 64.76,
+
             "std": 30.19,
+
             "min": 13.775,
+
             "max": 121.4
         }
     ])
 
+
     fake_current_data = pd.DataFrame({
+
         "tenure": [
             30,
             32,
@@ -261,36 +350,54 @@ def test_drift_endpoint():
         ]
     })
 
+
     fake_drift_results = {
 
         "tenure": {
+
             "reference_mean": 32.37,
+
             "current_mean": 32.0,
+
             "relative_change": 0.0114,
+
             "drift_detected": False
         },
 
         "MonthlyCharges": {
+
             "reference_mean": 64.76,
+
             "current_mean": 90.0,
+
             "relative_change": 0.3897,
+
             "drift_detected": True
         },
 
         "TotalCharges": {
+
             "reference_mean": 2279.73,
+
             "current_mean": 3000.0,
+
             "relative_change": 0.3159,
+
             "drift_detected": True
         },
 
         "AverageMonthlySpend": {
+
             "reference_mean": 64.76,
+
             "current_mean": 90.0,
+
             "relative_change": 0.3897,
+
             "drift_detected": True
         }
     }
+
 
     fake_report = {
 
@@ -301,13 +408,17 @@ def test_drift_endpoint():
         "drifted_feature_count": 3,
 
         "drifted_features": [
+
             "MonthlyCharges",
+
             "TotalCharges",
+
             "AverageMonthlySpend"
         ],
 
         "feature_results": fake_drift_results
     }
+
 
     with patch(
         "api.main.load_reference_statistics"
@@ -339,32 +450,41 @@ def test_drift_endpoint():
             "/drift"
         )
 
+
     assert response.status_code == 200
 
     data = response.json()
+
 
     assert (
         data["overall_drift_detected"]
         is True
     )
 
+
     assert (
         data["total_features_checked"]
         == 4
     )
+
 
     assert (
         data["drifted_feature_count"]
         == 3
     )
 
+
     assert set(
         data["drifted_features"]
     ) == {
+
         "MonthlyCharges",
+
         "TotalCharges",
+
         "AverageMonthlySpend"
     }
+
 
     assert (
         data["feature_results"]
@@ -373,11 +493,13 @@ def test_drift_endpoint():
         is True
     )
 
+
     assert (
         data["feature_results"]
         ["tenure"]
         ["drift_detected"]
         is False
     )
+
 
     assert "X-Request-ID" in response.headers

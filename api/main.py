@@ -33,16 +33,16 @@ from src.monitoring.drift_monitor import (
 )
 
 
-# ---------------------------------------------------------
+# ============================================================
 # Application Configuration
-# ---------------------------------------------------------
+# ============================================================
 
 CONFIG = load_config()
 
 
-# ---------------------------------------------------------
+# ============================================================
 # FastAPI Application
-# ---------------------------------------------------------
+# ============================================================
 
 app = FastAPI(
     title="Customer Churn Prediction API",
@@ -54,15 +54,23 @@ app = FastAPI(
 logger = get_logger(__name__)
 
 
-# ---------------------------------------------------------
+# ============================================================
 # Request ID Middleware
-# ---------------------------------------------------------
+# ============================================================
 
 @app.middleware("http")
 async def add_request_id(
     request: Request,
     call_next
 ):
+    """
+    Add a unique request ID to every API request.
+
+    The request ID is:
+    - stored in request.state
+    - returned through the X-Request-ID response header
+    - included in application logs
+    """
 
     request_id = generate_request_id()
 
@@ -99,14 +107,19 @@ async def add_request_id(
         raise
 
 
-# ---------------------------------------------------------
-# Global Pipeline
-# ---------------------------------------------------------
+# ============================================================
+# Global Churn Prediction Pipeline
+# ============================================================
 
 churn_pipeline = None
 
 
 def get_churn_pipeline():
+    """
+    Lazily initialize and return the churn prediction pipeline.
+
+    The pipeline is created only when it is first required.
+    """
 
     global churn_pipeline
 
@@ -121,12 +134,18 @@ def get_churn_pipeline():
     return churn_pipeline
 
 
-# ---------------------------------------------------------
+# ============================================================
 # Health Endpoint
-# ---------------------------------------------------------
+# ============================================================
 
 @app.get("/health")
 def health_check():
+    """
+    Basic liveness check.
+
+    This endpoint confirms that the API process is running.
+    It does not initialize the machine learning model.
+    """
 
     logger.info(
         "Health check requested"
@@ -138,9 +157,96 @@ def health_check():
     }
 
 
-# ---------------------------------------------------------
+# ============================================================
+# Readiness Endpoint
+# ============================================================
+
+@app.get("/ready")
+def readiness_check(
+    request: Request
+):
+    """
+    Readiness check for the prediction service.
+
+    This endpoint verifies that:
+    - the churn prediction pipeline can be initialized
+    - the model is available
+    - the classification threshold is available
+
+    Returns HTTP 200 when the service is ready.
+
+    Returns HTTP 503 when the prediction service
+    cannot be initialized correctly.
+    """
+
+    request_id = getattr(
+        request.state,
+        "request_id",
+        "unknown"
+    )
+
+    logger.info(
+        "Readiness check requested | request_id=%s",
+        request_id
+    )
+
+    try:
+
+        pipeline = get_churn_pipeline()
+
+        model_loaded = (
+            pipeline.predictor.model is not None
+        )
+
+        threshold_loaded = (
+            pipeline.predictor.threshold is not None
+        )
+
+        if not model_loaded:
+
+            raise RuntimeError(
+                "Model is not available."
+            )
+
+        if not threshold_loaded:
+
+            raise RuntimeError(
+                "Classification threshold is not available."
+            )
+
+        logger.info(
+            "Readiness check successful | request_id=%s",
+            request_id
+        )
+
+        return {
+            "status": "ready",
+            "service": "customer-churn-prediction-api",
+            "model_loaded": True,
+            "threshold_loaded": True
+        }
+
+    except Exception:
+
+        logger.exception(
+            "Readiness check failed | request_id=%s",
+            request_id
+        )
+
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "message": (
+                    "Prediction service is not ready."
+                ),
+                "request_id": request_id
+            }
+        )
+
+
+# ============================================================
 # Prediction Monitoring Endpoint
-# ---------------------------------------------------------
+# ============================================================
 
 @app.get(
     "/monitoring",
@@ -149,6 +255,9 @@ def health_check():
 def monitoring_metrics(
     request: Request
 ):
+    """
+    Return prediction monitoring metrics.
+    """
 
     request_id = getattr(
         request.state,
@@ -202,9 +311,9 @@ def monitoring_metrics(
         )
 
 
-# ---------------------------------------------------------
+# ============================================================
 # Data Drift Monitoring Endpoint
-# ---------------------------------------------------------
+# ============================================================
 
 @app.get(
     "/drift",
@@ -213,6 +322,11 @@ def monitoring_metrics(
 def drift_metrics(
     request: Request
 ):
+    """
+    Calculate numerical feature drift
+    between reference statistics and
+    current production-like data.
+    """
 
     request_id = getattr(
         request.state,
@@ -227,9 +341,9 @@ def drift_metrics(
 
     try:
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Read monitoring configuration
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         reference_statistics_path = (
             CONFIG["monitoring"]
@@ -258,25 +372,25 @@ def drift_metrics(
             drift_threshold
         )
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Load reference statistics
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         reference_stats = (
             load_reference_statistics()
         )
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Load current monitoring data
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         current_df = pd.read_csv(
             current_data_path
         )
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Numerical features being monitored
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         numeric_features = [
             "tenure",
@@ -285,9 +399,9 @@ def drift_metrics(
             "AverageMonthlySpend"
         ]
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Calculate feature-level drift
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         drift_results = (
             calculate_drift_from_reference_statistics(
@@ -298,9 +412,9 @@ def drift_metrics(
             )
         )
 
-        # -------------------------------------------------
+        # ----------------------------------------------------
         # Create overall drift report
-        # -------------------------------------------------
+        # ----------------------------------------------------
 
         report = create_drift_report(
             drift_results
@@ -339,9 +453,9 @@ def drift_metrics(
         )
 
 
-# ---------------------------------------------------------
+# ============================================================
 # Prediction Endpoint
-# ---------------------------------------------------------
+# ============================================================
 
 @app.post(
     "/predict",
@@ -351,6 +465,16 @@ def predict_churn(
     request: Request,
     customer: CustomerData
 ):
+    """
+    Generate a customer churn prediction.
+
+    The endpoint:
+    1. Validates the incoming customer data
+    2. Runs the churn prediction pipeline
+    3. Calculates prediction latency
+    4. Logs the prediction
+    5. Returns the prediction and probability
+    """
 
     request_id = getattr(
         request.state,
@@ -365,13 +489,25 @@ def predict_churn(
 
     try:
 
+        # ----------------------------------------------------
+        # Get prediction pipeline
+        # ----------------------------------------------------
+
         pipeline = get_churn_pipeline()
+
+        # ----------------------------------------------------
+        # Convert validated Pydantic data to DataFrame
+        # ----------------------------------------------------
 
         customer_data = customer.model_dump()
 
         input_df = pd.DataFrame(
             [customer_data]
         )
+
+        # ----------------------------------------------------
+        # Measure prediction latency
+        # ----------------------------------------------------
 
         prediction_start_time = (
             time.perf_counter()
@@ -386,6 +522,10 @@ def predict_churn(
             - prediction_start_time
         ) * 1000
 
+        # ----------------------------------------------------
+        # Extract prediction results
+        # ----------------------------------------------------
+
         prediction = int(
             predictions[0]
         )
@@ -394,11 +534,19 @@ def predict_churn(
             probabilities[0]
         )
 
+        # ----------------------------------------------------
+        # Create human-readable prediction label
+        # ----------------------------------------------------
+
         prediction_label = (
             "Likely to Churn"
             if prediction == 1
             else "Likely to Stay"
         )
+
+        # ----------------------------------------------------
+        # Application logging
+        # ----------------------------------------------------
 
         logger.info(
             "Prediction completed | "
@@ -414,6 +562,10 @@ def predict_churn(
             prediction_label
         )
 
+        # ----------------------------------------------------
+        # Prediction monitoring log
+        # ----------------------------------------------------
+
         log_prediction(
             request_id=request_id,
             prediction=prediction,
@@ -422,6 +574,10 @@ def predict_churn(
             prediction_label=prediction_label,
             latency_ms=latency_ms
         )
+
+        # ----------------------------------------------------
+        # API response
+        # ----------------------------------------------------
 
         return PredictionResponse(
 
