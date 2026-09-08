@@ -1,4 +1,4 @@
-\# Customer Churn Prediction – Production ML Pipeline
+﻿# Customer Churn Prediction â€“ Production ML Pipeline
 
 
 
@@ -6,7 +6,7 @@
 
 
 
-\### End-to-End Machine Learning Pipeline with FastAPI, Docker, AWS ECS Fargate, Monitoring \& Drift Detection
+### End-to-End Machine Learning Pipeline with FastAPI, Docker, AWS ECS Fargate, Monitoring & Drift Detection
 
 
 
@@ -18,7 +18,7 @@
 
 
 
-<strong>From Customer Data → Machine Learning → API → Docker → AWS → Monitoring</strong>
+<strong>From Customer Data â†’ Machine Learning â†’ API â†’ Docker â†’ AWS â†’ Monitoring</strong>
 
 
 
@@ -30,7 +30,7 @@
 
 
 
-\## 1. Project Overview
+## 1. Project Overview
 
 
 
@@ -102,7 +102,7 @@ This project goes beyond a traditional machine learning notebook by implementing
 
 
 
-\## 2. Business Problem
+## 2. Business Problem
 
 
 
@@ -130,7 +130,7 @@ A churn prediction system can help businesses:
 
 
 
-\### Model Output
+### Model Output
 
 
 
@@ -152,7 +152,7 @@ The prediction service produces:
 
 
 
-\## 3. Solution
+## 3. Solution
 
 
 
@@ -164,95 +164,95 @@ The project implements a complete machine learning lifecycle:
 
 Customer Data
 
-&#x20;     ↓
+&#x20;     â†“
 
 Data Loading
 
-&#x20;     ↓
+&#x20;     â†“
 
 Data Validation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Data Cleaning
 
-&#x20;     ↓
+&#x20;     â†“
 
 Exploratory Data Analysis
 
-&#x20;     ↓
+&#x20;     â†“
 
 Statistical Analysis
 
-&#x20;     ↓
+&#x20;     â†“
 
 Feature Engineering
 
-&#x20;     ↓
+&#x20;     â†“
 
 Train / Validation / Test
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Development
 
-&#x20;     ↓
+&#x20;     â†“
 
 Cross Validation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Hyperparameter Tuning
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Evaluation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Classification Threshold Evaluation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Final XGBoost Model
 
-&#x20;     ↓
+&#x20;     â†“
 
 MLflow Experiment Tracking
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Artifact
 
-&#x20;     ↓
+&#x20;     â†“
 
 FastAPI
 
-&#x20;     ↓
+&#x20;     â†“
 
 Automated Testing
 
-&#x20;     ↓
+&#x20;     â†“
 
 Docker
 
-&#x20;     ↓
+&#x20;     â†“
 
 Amazon ECR
 
-&#x20;     ↓
+&#x20;     â†“
 
 Amazon ECS Fargate
 
-&#x20;     ↓
+&#x20;     â†“
 
 CloudWatch Logs
 
-&#x20;     ↓
+&#x20;     â†“
 
 Prediction Monitoring
 
-&#x20;     ↓
+&#x20;     â†“
 
 Feature Drift Detection
 
@@ -264,7 +264,7 @@ Feature Drift Detection
 
 
 
-\## 4. Complete Architecture
+## 4. Complete Architecture
 
 
 
@@ -276,7 +276,7 @@ Feature Drift Detection
 
 
 
-\### End-to-End Architecture
+### End-to-End Architecture
 
 
 
@@ -284,205 +284,205 @@ Feature Drift Detection
 
 &#x20;                        CUSTOMER DATA
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │   Raw Telco Dataset    │
+&#x20;                 â”‚   Raw Telco Dataset    â”‚
 
-&#x20;                 │      CSV / SQL          │
+&#x20;                 â”‚      CSV / SQL          â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │    Data Loading         │
+&#x20;                 â”‚    Data Loading         â”‚
 
-&#x20;                 │       Pandas            │
+&#x20;                 â”‚       Pandas            â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │    Data Validation      │
+&#x20;                 â”‚    Data Validation      â”‚
 
-&#x20;                 │ Schema + Quality Checks │
+&#x20;                 â”‚ Schema + Quality Checks â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │     Data Cleaning       │
+&#x20;                 â”‚     Data Cleaning       â”‚
 
-&#x20;                 │ Missing Value Handling  │
+&#x20;                 â”‚ Missing Value Handling  â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │  Feature Engineering    │
+&#x20;                 â”‚  Feature Engineering    â”‚
 
-&#x20;                 │ AverageMonthlySpend     │
+&#x20;                 â”‚ AverageMonthlySpend     â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;                 ┌─────────────────────────┐
+&#x20;                 â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                 │ Train / Validation /    │
+&#x20;                 â”‚ Train / Validation /    â”‚
 
-&#x20;                 │       Test Split        │
+&#x20;                 â”‚       Test Split        â”‚
 
-&#x20;                 └────────────┬────────────┘
+&#x20;                 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                              │
+&#x20;                              â”‚
 
-&#x20;                              ▼
+&#x20;                              â–¼
 
-&#x20;             ┌──────────────────────────────────┐
+&#x20;             â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;             │      MODEL DEVELOPMENT           │
+&#x20;             â”‚      MODEL DEVELOPMENT           â”‚
 
-&#x20;             │                                  │
+&#x20;             â”‚                                  â”‚
 
-&#x20;             │  Logistic Regression             │
+&#x20;             â”‚  Logistic Regression             â”‚
 
-&#x20;             │  Random Forest                   │
+&#x20;             â”‚  Random Forest                   â”‚
 
-&#x20;             │  XGBoost                         │
+&#x20;             â”‚  XGBoost                         â”‚
 
-&#x20;             │                                  │
+&#x20;             â”‚                                  â”‚
 
-&#x20;             │  Cross Validation                │
+&#x20;             â”‚  Cross Validation                â”‚
 
-&#x20;             │  Hyperparameter Tuning           │
+&#x20;             â”‚  Hyperparameter Tuning           â”‚
 
-&#x20;             │  Model Evaluation                │
+&#x20;             â”‚  Model Evaluation                â”‚
 
-&#x20;             └───────────────┬──────────────────┘
+&#x20;             â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │  Final XGBoost    │
+&#x20;                   â”‚  Final XGBoost    â”‚
 
-&#x20;                   │      Model        │
+&#x20;                   â”‚      Model        â”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │      MLflow       │
+&#x20;                   â”‚      MLflow       â”‚
 
-&#x20;                   │ Experiment        │
+&#x20;                   â”‚ Experiment        â”‚
 
-&#x20;                   │ Tracking          │
+&#x20;                   â”‚ Tracking          â”‚
 
-&#x20;                   │ Model Artifacts   │
+&#x20;                   â”‚ Model Artifacts   â”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │ Saved Model       │
+&#x20;                   â”‚ Saved Model       â”‚
 
-&#x20;                   │ + Threshold       │
+&#x20;                   â”‚ + Threshold       â”‚
 
-&#x20;                   │ + Metadata        │
+&#x20;                   â”‚ + Metadata        â”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │      Docker       │
+&#x20;                   â”‚      Docker       â”‚
 
-&#x20;                   │ FastAPI + Model   │
+&#x20;                   â”‚ FastAPI + Model   â”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │    Amazon ECR     │
+&#x20;                   â”‚    Amazon ECR     â”‚
 
-&#x20;                   │ Container Registry│
+&#x20;                   â”‚ Container Registryâ”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
-&#x20;                   ┌───────────────────┐
+&#x20;                   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;                   │  Amazon ECS       │
+&#x20;                   â”‚  Amazon ECS       â”‚
 
-&#x20;                   │     Fargate       │
+&#x20;                   â”‚     Fargate       â”‚
 
-&#x20;                   │                   │
+&#x20;                   â”‚                   â”‚
 
-&#x20;                   │ FastAPI Container │
+&#x20;                   â”‚ FastAPI Container â”‚
 
-&#x20;                   └─────────┬─────────┘
+&#x20;                   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;               ┌─────────────┼─────────────┐
+&#x20;               â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;               │             │             │
+&#x20;               â”‚             â”‚             â”‚
 
-&#x20;               ▼             ▼             ▼
+&#x20;               â–¼             â–¼             â–¼
 
 &#x20;         CloudWatch      Monitoring     Drift
 
 &#x20;            Logs         Endpoint      Detection
 
-&#x20;               │             │             │
+&#x20;               â”‚             â”‚             â”‚
 
-&#x20;               └─────────────┼─────────────┘
+&#x20;               â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;                             │
+&#x20;                             â”‚
 
-&#x20;                             ▼
+&#x20;                             â–¼
 
 &#x20;                   Customer Prediction
 
@@ -494,11 +494,11 @@ Feature Drift Detection
 
 
 
-\## 5. Technology Stack
+## 5. Technology Stack
 
 
 
-\### 5.1 Programming \& Data
+### 5.1 Programming & Data
 
 
 
@@ -518,7 +518,7 @@ Feature Drift Detection
 
 
 
-\### 5.2 Machine Learning
+### 5.2 Machine Learning
 
 
 
@@ -544,7 +544,7 @@ Feature Drift Detection
 
 
 
-\### 5.3 Experiment Tracking
+### 5.3 Experiment Tracking
 
 
 
@@ -552,7 +552,7 @@ Feature Drift Detection
 
 
 
-\### 5.4 API \& Application
+### 5.4 API & Application
 
 
 
@@ -566,7 +566,7 @@ Feature Drift Detection
 
 
 
-\### 5.5 Testing
+### 5.5 Testing
 
 
 
@@ -580,7 +580,7 @@ Feature Drift Detection
 
 
 
-\### 5.6 Containerization
+### 5.6 Containerization
 
 
 
@@ -590,7 +590,7 @@ Feature Drift Detection
 
 
 
-\### 5.7 Cloud
+### 5.7 Cloud
 
 
 
@@ -606,7 +606,7 @@ Feature Drift Detection
 
 
 
-\### 5.8 Version Control \& CI
+### 5.8 Version Control & CI
 
 
 
@@ -618,7 +618,7 @@ Feature Drift Detection
 
 
 
-\### 5.9 Configuration
+### 5.9 Configuration
 
 
 
@@ -632,7 +632,7 @@ Feature Drift Detection
 
 
 
-\## 6. Dataset
+## 6. Dataset
 
 
 
@@ -672,7 +672,7 @@ The dataset contains customer-level information including:
 
 
 
-\### Important Features
+### Important Features
 
 
 
@@ -730,11 +730,11 @@ The raw dataset is excluded from Git version control through `.gitignore`.
 
 
 
-\## 7. Data Validation \& Cleaning
+## 7. Data Validation & Cleaning
 
 
 
-\### 7.1 Data Validation
+### 7.1 Data Validation
 
 
 
@@ -764,15 +764,15 @@ Example validation flow:
 
 Input Data
 
-&#x20;   ↓
+&#x20;   â†“
 
 Schema Validation
 
-&#x20;   ↓
+&#x20;   â†“
 
 Data Quality Validation
 
-&#x20;   ↓
+&#x20;   â†“
 
 Validated Dataset
 
@@ -780,7 +780,7 @@ Validated Dataset
 
 
 
-\### 7.2 Data Cleaning
+### 7.2 Data Cleaning
 
 
 
@@ -824,7 +824,7 @@ The implementation does not use arbitrary mean or median replacement for these s
 
 
 
-\## 8. Exploratory Data Analysis
+## 8. Exploratory Data Analysis
 
 
 
@@ -858,7 +858,7 @@ Areas analyzed include:
 
 
 
-\## 9. Statistical Analysis
+## 9. Statistical Analysis
 
 
 
@@ -870,7 +870,7 @@ The project evaluates:
 
 
 
-\### 9.1 Monthly Charges vs Churn
+### 9.1 Monthly Charges vs Churn
 
 
 
@@ -878,7 +878,7 @@ Welch's independent t-test.
 
 
 
-\### 9.2 Tenure vs Churn
+### 9.2 Tenure vs Churn
 
 
 
@@ -886,19 +886,19 @@ Welch's independent t-test.
 
 
 
-\### 9.3 Contract vs Churn
+### 9.3 Contract vs Churn
 
 
 
-Chi-square test and Cramér's V.
+Chi-square test and CramÃ©r's V.
 
 
 
-\### 9.4 Internet Service vs Churn
+### 9.4 Internet Service vs Churn
 
 
 
-Chi-square test and Cramér's V.
+Chi-square test and CramÃ©r's V.
 
 
 
@@ -910,7 +910,7 @@ These analyses help identify relationships between customer characteristics and 
 
 
 
-\## 10. Feature Engineering
+## 10. Feature Engineering
 
 
 
@@ -918,7 +918,7 @@ The project creates a derived feature:
 
 
 
-\### AverageMonthlySpend
+### AverageMonthlySpend
 
 
 
@@ -950,9 +950,9 @@ The target is encoded as:
 
 ```text
 
-No  → 0
+No  â†’ 0
 
-Yes → 1
+Yes â†’ 1
 
 ```
 
@@ -966,7 +966,7 @@ The `customerID` column is removed before model prediction because it is an iden
 
 
 
-\## 11. Machine Learning Pipeline
+## 11. Machine Learning Pipeline
 
 
 
@@ -978,39 +978,39 @@ The machine learning workflow includes:
 
 Data Preparation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Feature Engineering
 
-&#x20;     ↓
+&#x20;     â†“
 
 Train / Validation / Test Split
 
-&#x20;     ↓
+&#x20;     â†“
 
 Preprocessing
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Training
 
-&#x20;     ↓
+&#x20;     â†“
 
 Stratified Cross Validation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Hyperparameter Optimization
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Evaluation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Threshold Evaluation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Final Model Selection
 
@@ -1022,11 +1022,11 @@ Final Model Selection
 
 
 
-\## 12. Preprocessing Pipeline
+## 12. Preprocessing Pipeline
 
 
 
-\### 12.1 Numerical Features
+### 12.1 Numerical Features
 
 
 
@@ -1038,7 +1038,7 @@ The numerical preprocessing pipeline uses:
 
 Median Imputation
 
-&#x20;      ↓
+&#x20;      â†“
 
 StandardScaler
 
@@ -1046,7 +1046,7 @@ StandardScaler
 
 
 
-\### 12.2 Categorical Features
+### 12.2 Categorical Features
 
 
 
@@ -1058,11 +1058,11 @@ The categorical preprocessing pipeline uses:
 
 Most-Frequent Imputation
 
-&#x20;      ↓
+&#x20;      â†“
 
 OneHotEncoder
 
-&#x20;      ↓
+&#x20;      â†“
 
 handle\_unknown="ignore"
 
@@ -1078,7 +1078,7 @@ The preprocessing and estimator are combined into a Scikit-learn pipeline to ens
 
 
 
-\## 13. Class Imbalance Handling
+## 13. Class Imbalance Handling
 
 
 
@@ -1122,11 +1122,11 @@ This helps the models pay appropriate attention to the churn class.
 
 
 
-\## 14. Models Evaluated
+## 14. Models Evaluated
 
 
 
-\### 14.1 Logistic Regression
+### 14.1 Logistic Regression
 
 
 
@@ -1148,7 +1148,7 @@ Advantages:
 
 
 
-\### 14.2 Random Forest
+### 14.2 Random Forest
 
 
 
@@ -1164,7 +1164,7 @@ Used to capture:
 
 
 
-\### 14.3 XGBoost
+### 14.3 XGBoost
 
 
 
@@ -1188,7 +1188,7 @@ models/final\_xgboost\_pipeline.pkl
 
 
 
-\## 15. Cross Validation \& Hyperparameter Optimization
+## 15. Cross Validation & Hyperparameter Optimization
 
 
 
@@ -1208,7 +1208,7 @@ The process evaluates combinations of model parameters using cross-validation an
 
 
 
-\## 16. Final Model Performance
+## 16. Final Model Performance
 
 
 
@@ -1236,7 +1236,7 @@ The final XGBoost model achieved:
 
 
 
-\### Interpretation
+### Interpretation
 
 
 
@@ -1272,7 +1272,7 @@ The relatively high recall is useful in a churn-retention scenario where missing
 
 
 
-\## 17. Classification Threshold
+## 17. Classification Threshold
 
 
 
@@ -1316,7 +1316,7 @@ During inference:
 
 Probability >= Threshold
 
-&#x20;       ↓
+&#x20;       â†“
 
 &#x20;  Churn = 1
 
@@ -1332,7 +1332,7 @@ otherwise:
 
 Probability < Threshold
 
-&#x20;       ↓
+&#x20;       â†“
 
 &#x20;  Churn = 0
 
@@ -1348,7 +1348,7 @@ The API also returns the threshold used for the prediction.
 
 
 
-\## 18. MLflow Experiment Tracking
+## 18. MLflow Experiment Tracking
 
 
 
@@ -1376,7 +1376,7 @@ The MLflow workflow provides a structured way to track experiments and model-rel
 
 
 
-\### Important Scope
+### Important Scope
 
 
 
@@ -1416,7 +1416,7 @@ or enterprise model governance.
 
 
 
-\## 19. Model Artifacts
+## 19. Model Artifacts
 
 
 
@@ -1428,17 +1428,17 @@ The following model artifacts are generated locally:
 
 models/
 
-├── final\_xgboost\_pipeline.pkl
+â”œâ”€â”€ final\_xgboost\_pipeline.pkl
 
-├── churn\_threshold.pkl
+â”œâ”€â”€ churn\_threshold.pkl
 
-└── model\_metadata.json
+â””â”€â”€ model\_metadata.json
 
 ```
 
 
 
-\### Model Metadata
+### Model Metadata
 
 
 
@@ -1472,7 +1472,7 @@ Model binary files are intentionally excluded from Git version control.
 
 
 
-\## 20. FastAPI Prediction API
+## 20. FastAPI Prediction API
 
 
 
@@ -1504,11 +1504,11 @@ GET  /drift
 
 
 
-\## 21. API Endpoints
+## 21. API Endpoints
 
 
 
-\### 21.1 Health Endpoint
+### 21.1 Health Endpoint
 
 
 
@@ -1542,7 +1542,7 @@ This verifies that the application is responding.
 
 
 
-\### 21.2 Readiness Endpoint
+### 21.2 Readiness Endpoint
 
 
 
@@ -1596,7 +1596,7 @@ This endpoint is also used by the Docker/ECS health-check configuration.
 
 
 
-\### 21.3 Prediction Endpoint
+### 21.3 Prediction Endpoint
 
 
 
@@ -1634,7 +1634,7 @@ The API accepts customer information and returns:
 
 
 
-\## 22. API Request Validation
+## 22. API Request Validation
 
 
 
@@ -1670,7 +1670,7 @@ Invalid requests are rejected before entering the prediction pipeline.
 
 
 
-\## 23. Request ID Tracing
+## 23. Request ID Tracing
 
 
 
@@ -1702,19 +1702,19 @@ Example:
 
 Request started
 
-&#x20;     ↓
+&#x20;     â†“
 
 request\_id generated
 
-&#x20;     ↓
+&#x20;     â†“
 
 Prediction
 
-&#x20;     ↓
+&#x20;     â†“
 
 Request completed
 
-&#x20;     ↓
+&#x20;     â†“
 
 X-Request-ID returned
 
@@ -1730,7 +1730,7 @@ This provides a basic mechanism for tracing individual requests through the appl
 
 
 
-\## 24. Structured Application Logging
+## 24. Structured Application Logging
 
 
 
@@ -1792,7 +1792,7 @@ latency\_ms
 
 
 
-\## 25. Lazy Model Loading
+## 25. Lazy Model Loading
 
 
 
@@ -1812,15 +1812,15 @@ Instead:
 
 FastAPI starts
 
-&#x20;     ↓
+&#x20;     â†“
 
 Application available
 
-&#x20;     ↓
+&#x20;     â†“
 
 Prediction pipeline requested
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model initialized
 
@@ -1848,7 +1848,7 @@ Benefits include:
 
 
 
-\## 26. Prediction Monitoring
+## 26. Prediction Monitoring
 
 
 
@@ -1948,7 +1948,7 @@ Example:
 
 
 
-\## 27. Feature Drift Monitoring
+## 27. Feature Drift Monitoring
 
 
 
@@ -1982,7 +1982,7 @@ The monitoring process compares reference statistics against a current productio
 
 
 
-\## 28. Drift Calculation
+## 28. Drift Calculation
 
 
 
@@ -2030,7 +2030,7 @@ The configured threshold is:
 
 
 
-\## 29. Simulated Production Batch
+## 29. Simulated Production Batch
 
 
 
@@ -2112,7 +2112,7 @@ Example response:
 
 
 
-\## 30. Streamlit Interface
+## 30. Streamlit Interface
 
 
 
@@ -2128,27 +2128,27 @@ The workflow is:
 
 User Input
 
-&#x20;   ↓
+&#x20;   â†“
 
 Streamlit
 
-&#x20;   ↓
+&#x20;   â†“
 
 FastAPI
 
-&#x20;   ↓
+&#x20;   â†“
 
 Prediction Pipeline
 
-&#x20;   ↓
+&#x20;   â†“
 
 XGBoost
 
-&#x20;   ↓
+&#x20;   â†“
 
 Prediction + Probability
 
-&#x20;   ↓
+&#x20;   â†“
 
 Streamlit Result
 
@@ -2182,7 +2182,7 @@ The AWS deployment described below focuses on the FastAPI inference service.
 
 
 
-\## 31. Docker Architecture
+## 31. Docker Architecture
 
 
 
@@ -2194,25 +2194,25 @@ The project contains separate Docker configurations for the API and Streamlit in
 
 &#x20;                Docker Compose
 
-&#x20;                      │
+&#x20;                      â”‚
 
-&#x20;           ┌──────────┴──────────┐
+&#x20;           â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;           │                     │
+&#x20;           â”‚                     â”‚
 
-&#x20;           ▼                     ▼
+&#x20;           â–¼                     â–¼
 
 &#x20;    FastAPI Container      Streamlit Container
 
 &#x20;       Port 8000              Port 8501
 
-&#x20;           │                     │
+&#x20;           â”‚                     â”‚
 
-&#x20;           │◄──── HTTP ──────────┘
+&#x20;           â”‚â—„â”€â”€â”€â”€ HTTP â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 
-&#x20;           │
+&#x20;           â”‚
 
-&#x20;           ▼
+&#x20;           â–¼
 
 &#x20;      XGBoost Pipeline
 
@@ -2224,11 +2224,11 @@ The project contains separate Docker configurations for the API and Streamlit in
 
 
 
-\## 32. Docker Containers
+## 32. Docker Containers
 
 
 
-\### 32.1 FastAPI Docker Container
+### 32.1 FastAPI Docker Container
 
 
 
@@ -2264,7 +2264,7 @@ The container:
 
 
 
-\### 32.2 Streamlit Docker Container
+### 32.2 Streamlit Docker Container
 
 
 
@@ -2292,7 +2292,7 @@ The container exposes:
 
 
 
-\### 32.3 Docker Compose
+### 32.3 Docker Compose
 
 
 
@@ -2360,7 +2360,7 @@ docker compose down
 
 
 
-\## 33. AWS Deployment
+## 33. AWS Deployment
 
 
 
@@ -2376,19 +2376,19 @@ The deployment architecture uses:
 
 Docker
 
-&#x20;  ↓
+&#x20;  â†“
 
 Amazon ECR
 
-&#x20;  ↓
+&#x20;  â†“
 
 Amazon ECS
 
-&#x20;  ↓
+&#x20;  â†“
 
 AWS Fargate
 
-&#x20;  ↓
+&#x20;  â†“
 
 CloudWatch Logs
 
@@ -2412,7 +2412,7 @@ ap-south-1
 
 
 
-\## 34. AWS Services Used
+## 34. AWS Services Used
 
 
 
@@ -2436,7 +2436,7 @@ ap-south-1
 
 
 
-\## 35. Amazon ECR
+## 35. Amazon ECR
 
 
 
@@ -2464,15 +2464,15 @@ Architecture:
 
 Local Docker Image
 
-&#x20;      ↓
+&#x20;      â†“
 
 docker push
 
-&#x20;      ↓
+&#x20;      â†“
 
 Amazon ECR
 
-&#x20;      ↓
+&#x20;      â†“
 
 ECS pulls image
 
@@ -2488,7 +2488,7 @@ ECR image scanning is enabled for the repository.
 
 
 
-\## 36. Amazon ECS Fargate
+## 36. Amazon ECS Fargate
 
 
 
@@ -2552,7 +2552,7 @@ Service Status:      ACTIVE
 
 
 
-\## 37. IAM
+## 37. IAM
 
 
 
@@ -2582,7 +2582,7 @@ The project does not store AWS credentials in the repository.
 
 
 
-\## 38. CloudWatch Logs
+## 38. CloudWatch Logs
 
 
 
@@ -2642,7 +2642,7 @@ label=Likely to Churn
 
 
 
-\## 39. AWS Network Architecture
+## 39. AWS Network Architecture
 
 
 
@@ -2654,27 +2654,27 @@ The current demonstration deployment exposes the ECS service through a public IP
 
 Internet
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ▼
+&#x20;   â–¼
 
 Public IP
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ▼
+&#x20;   â–¼
 
 ECS Fargate Task
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ▼
+&#x20;   â–¼
 
 FastAPI
 
-&#x20;   │
+&#x20;   â”‚
 
-&#x20;   ▼
+&#x20;   â–¼
 
 XGBoost Model
 
@@ -2682,7 +2682,7 @@ XGBoost Model
 
 
 
-\### Important limitation
+### Important limitation
 
 
 
@@ -2720,7 +2720,7 @@ This is intentionally documented as a learning/demo deployment rather than a ful
 
 
 
-\## 40. AWS API Verification
+## 40. AWS API Verification
 
 
 
@@ -2728,7 +2728,7 @@ The deployed FastAPI service was successfully verified.
 
 
 
-\### 40.1 Health Verification
+### 40.1 Health Verification
 
 
 
@@ -2756,7 +2756,7 @@ healthy
 
 
 
-\### 40.2 Readiness Verification
+### 40.2 Readiness Verification
 
 
 
@@ -2788,7 +2788,7 @@ threshold\_loaded = true
 
 
 
-\### 40.3 Prediction Verification
+### 40.3 Prediction Verification
 
 
 
@@ -2826,7 +2826,7 @@ Verified response:
 
 
 
-\### 40.4 Monitoring Verification
+### 40.4 Monitoring Verification
 
 
 
@@ -2846,7 +2846,7 @@ Successfully returned prediction metrics.
 
 
 
-\### 40.5 Drift Verification
+### 40.5 Drift Verification
 
 
 
@@ -2870,7 +2870,7 @@ Successfully detected intentionally shifted production-like features.
 
 
 
-\## 41. Production-Oriented Monitoring Architecture
+## 41. Production-Oriented Monitoring Architecture
 
 
 
@@ -2878,37 +2878,37 @@ Successfully detected intentionally shifted production-like features.
 
 &#x20;               API Request
 
-&#x20;                    │
+&#x20;                    â”‚
 
-&#x20;                    ▼
+&#x20;                    â–¼
 
 &#x20;              FastAPI API
 
-&#x20;                    │
+&#x20;                    â”‚
 
-&#x20;         ┌──────────┴──────────┐
+&#x20;         â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;         │                     │
+&#x20;         â”‚                     â”‚
 
-&#x20;         ▼                     ▼
+&#x20;         â–¼                     â–¼
 
 &#x20;    Prediction            Request Log
 
-&#x20;         │
+&#x20;         â”‚
 
-&#x20;         ▼
+&#x20;         â–¼
 
 &#x20;Prediction JSONL
 
-&#x20;         │
+&#x20;         â”‚
 
-&#x20;         ▼
+&#x20;         â–¼
 
 &#x20;   /monitoring
 
-&#x20;         │
+&#x20;         â”‚
 
-&#x20;         ▼
+&#x20;         â–¼
 
 Operational Metrics
 
@@ -2920,7 +2920,7 @@ Operational Metrics
 
 
 
-\## 42. Drift Monitoring Architecture
+## 42. Drift Monitoring Architecture
 
 
 
@@ -2928,43 +2928,43 @@ Operational Metrics
 
 Reference Dataset
 
-&#x20;      │
+&#x20;      â”‚
 
-&#x20;      ▼
+&#x20;      â–¼
 
 Reference Statistics
 
-&#x20;      │
+&#x20;      â”‚
 
-&#x20;      ├───────────────┐
+&#x20;      â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 
-&#x20;      │               │
+&#x20;      â”‚               â”‚
 
-&#x20;      ▼               ▼
+&#x20;      â–¼               â–¼
 
 Reference Mean    Current Mean
 
-&#x20;                      ▲
+&#x20;                      â–²
 
-&#x20;                      │
+&#x20;                      â”‚
 
 &#x20;            Production-like Data
 
-&#x20;                      │
+&#x20;                      â”‚
 
-&#x20;                      ▼
+&#x20;                      â–¼
 
 &#x20;               Drift Calculation
 
-&#x20;                      │
+&#x20;                      â”‚
 
-&#x20;                      ▼
+&#x20;                      â–¼
 
 &#x20;                 Drift Report
 
-&#x20;                      │
+&#x20;                      â”‚
 
-&#x20;                      ▼
+&#x20;                      â–¼
 
 &#x20;                   /drift
 
@@ -2976,7 +2976,7 @@ Reference Mean    Current Mean
 
 
 
-\## 43. Automated Testing
+## 43. Automated Testing
 
 
 
@@ -3022,7 +3022,7 @@ The project includes automated tests covering:
 
 
 
-\## 44. Final Test Result
+## 44. Final Test Result
 
 
 
@@ -3058,7 +3058,7 @@ The tests use dependency injection and test doubles/fake models where appropriat
 
 
 
-\## 45. CI / GitHub Actions
+## 45. CI / GitHub Actions
 
 
 
@@ -3078,23 +3078,23 @@ The AWS-oriented workflow can:
 
 Checkout Repository
 
-&#x20;       ↓
+&#x20;       â†“
 
 Setup Python 3.10
 
-&#x20;       ↓
+&#x20;       â†“
 
 Install Dependencies
 
-&#x20;       ↓
+&#x20;       â†“
 
 Run Tests
 
-&#x20;       ↓
+&#x20;       â†“
 
 Build Docker Image
 
-&#x20;       ↓
+&#x20;       â†“
 
 Verify Docker Image
 
@@ -3114,7 +3114,7 @@ It does not automatically deploy every GitHub commit to AWS.
 
 
 
-\## 46. Configuration Management
+## 46. Configuration Management
 
 
 
@@ -3168,7 +3168,7 @@ Sensitive credentials are not stored in the repository.
 
 
 
-\## 47. SQL Analytics
+## 47. SQL Analytics
 
 
 
@@ -3180,13 +3180,13 @@ The repository includes SQL scripts for analytical and data-quality workflows:
 
 sql/
 
-├── 01\_schema.sql
+â”œâ”€â”€ 01\_schema.sql
 
-├── 02\_data\_quality.sql
+â”œâ”€â”€ 02\_data\_quality.sql
 
-├── 03\_customer\_analytics.sql
+â”œâ”€â”€ 03\_customer\_analytics.sql
 
-└── 04\_churn\_analytics.sql
+â””â”€â”€ 04\_churn\_analytics.sql
 
 ```
 
@@ -3214,7 +3214,7 @@ The current trained/inference pipeline uses the processed Telco dataset and does
 
 
 
-\## 48. Project Structure
+## 48. Project Structure
 
 
 
@@ -3222,195 +3222,195 @@ The current trained/inference pipeline uses the processed Telco dataset and does
 
 Customer-Churn-Production-ML-Pipeline/
 
-│
+â”‚
 
-├── .github/
+â”œâ”€â”€ .github/
 
-│   └── workflows/
+â”‚   â””â”€â”€ workflows/
 
-│       ├── aws-deploy.yml
+â”‚       â”œâ”€â”€ aws-deploy.yml
 
-│       └── ci.yml
+â”‚       â””â”€â”€ ci.yml
 
-│
+â”‚
 
-├── api/
+â”œâ”€â”€ api/
 
-│   ├── main.py
+â”‚   â”œâ”€â”€ main.py
 
-│   └── schemas.py
+â”‚   â””â”€â”€ schemas.py
 
-│
+â”‚
 
-├── app/
+â”œâ”€â”€ app/
 
-│   └── app.py
+â”‚   â””â”€â”€ app.py
 
-│
+â”‚
 
-├── aws/
+â”œâ”€â”€ aws/
 
-│   ├── README.md
+â”‚   â”œâ”€â”€ README.md
 
-│   ├── deployment-config.yaml
+â”‚   â”œâ”€â”€ deployment-config.yaml
 
-│   ├── ecs-task-definition.json
+â”‚   â”œâ”€â”€ ecs-task-definition.json
 
-│   └── ecs-trust-policy.json
+â”‚   â””â”€â”€ ecs-trust-policy.json
 
-│
+â”‚
 
-├── data/
+â”œâ”€â”€ data/
 
-│   ├── raw/
+â”‚   â”œâ”€â”€ raw/
 
-│   ├── processed/
+â”‚   â”œâ”€â”€ processed/
 
-│   └── monitoring/
+â”‚   â””â”€â”€ monitoring/
 
-│       └── simulated\_production\_batch.csv
+â”‚       â””â”€â”€ simulated\_production\_batch.csv
 
-│
+â”‚
 
-├── docs/
+â”œâ”€â”€ docs/
 
-│   ├── architecture.png
+â”‚   â”œâ”€â”€ architecture.png
 
-│   └── aws\_architecture.md
+â”‚   â””â”€â”€ aws\_architecture.md
 
-│
+â”‚
 
-├── notebooks/
+â”œâ”€â”€ notebooks/
 
-│   ├── 01\_data\_understanding.ipynb
+â”‚   â”œâ”€â”€ 01\_data\_understanding.ipynb
 
-│   ├── 02\_data\_cleaning\_eda.ipynb
+â”‚   â”œâ”€â”€ 02\_data\_cleaning\_eda.ipynb
 
-│   ├── 03\_statistical\_analysis.ipynb
+â”‚   â”œâ”€â”€ 03\_statistical\_analysis.ipynb
 
-│   ├── 04\_feature\_engineering.ipynb
+â”‚   â”œâ”€â”€ 04\_feature\_engineering.ipynb
 
-│   ├── 05\_Machine\_Learning.ipynb
+â”‚   â”œâ”€â”€ 05\_Machine\_Learning.ipynb
 
-│   └── 06\_mlflow\_experiment\_tracking.ipynb
+â”‚   â””â”€â”€ 06\_mlflow\_experiment\_tracking.ipynb
 
-│
+â”‚
 
-├── sql/
+â”œâ”€â”€ sql/
 
-│   ├── 01\_schema.sql
+â”‚   â”œâ”€â”€ 01\_schema.sql
 
-│   ├── 02\_data\_quality.sql
+â”‚   â”œâ”€â”€ 02\_data\_quality.sql
 
-│   ├── 03\_customer\_analytics.sql
+â”‚   â”œâ”€â”€ 03\_customer\_analytics.sql
 
-│   └── 04\_churn\_analytics.sql
+â”‚   â””â”€â”€ 04\_churn\_analytics.sql
 
-│
+â”‚
 
-├── src/
+â”œâ”€â”€ src/
 
-│   ├── data/
+â”‚   â”œâ”€â”€ data/
 
-│   │   ├── data\_loader.py
+â”‚   â”‚   â”œâ”€â”€ data\_loader.py
 
-│   │   ├── data\_validator.py
+â”‚   â”‚   â”œâ”€â”€ data\_validator.py
 
-│   │   └── data\_cleaner.py
+â”‚   â”‚   â””â”€â”€ data\_cleaner.py
 
-│   │
+â”‚   â”‚
 
-│   ├── features/
+â”‚   â”œâ”€â”€ features/
 
-│   │   └── feature\_engineering.py
+â”‚   â”‚   â””â”€â”€ feature\_engineering.py
 
-│   │
+â”‚   â”‚
 
-│   ├── models/
+â”‚   â”œâ”€â”€ models/
 
-│   │   └── model\_predictor.py
+â”‚   â”‚   â””â”€â”€ model\_predictor.py
 
-│   │
+â”‚   â”‚
 
-│   ├── monitoring/
+â”‚   â”œâ”€â”€ monitoring/
 
-│   │   ├── create\_simulated\_batch.py
+â”‚   â”‚   â”œâ”€â”€ create\_simulated\_batch.py
 
-│   │   ├── drift\_monitor.py
+â”‚   â”‚   â”œâ”€â”€ drift\_monitor.py
 
-│   │   ├── prediction\_logger.py
+â”‚   â”‚   â”œâ”€â”€ prediction\_logger.py
 
-│   │   ├── prediction\_monitor.py
+â”‚   â”‚   â”œâ”€â”€ prediction\_monitor.py
 
-│   │   └── reference\_statistics.py
+â”‚   â”‚   â””â”€â”€ reference\_statistics.py
 
-│   │
+â”‚   â”‚
 
-│   ├── utils/
+â”‚   â”œâ”€â”€ utils/
 
-│   │   ├── config\_loader.py
+â”‚   â”‚   â”œâ”€â”€ config\_loader.py
 
-│   │   ├── logger.py
+â”‚   â”‚   â”œâ”€â”€ logger.py
 
-│   │   └── request\_id.py
+â”‚   â”‚   â””â”€â”€ request\_id.py
 
-│   │
+â”‚   â”‚
 
-│   └── pipeline.py
+â”‚   â””â”€â”€ pipeline.py
 
-│
+â”‚
 
-├── tests/
+â”œâ”€â”€ tests/
 
-│   ├── test\_api.py
+â”‚   â”œâ”€â”€ test\_api.py
 
-│   ├── test\_data\_validator.py
+â”‚   â”œâ”€â”€ test\_data\_validator.py
 
-│   ├── test\_drift\_monitor.py
+â”‚   â”œâ”€â”€ test\_drift\_monitor.py
 
-│   ├── test\_drift\_report.py
+â”‚   â”œâ”€â”€ test\_drift\_report.py
 
-│   ├── test\_doubles.py
+â”‚   â”œâ”€â”€ test\_doubles.py
 
-│   ├── test\_feature\_engineering.py
+â”‚   â”œâ”€â”€ test\_feature\_engineering.py
 
-│   ├── test\_model\_predictor.py
+â”‚   â”œâ”€â”€ test\_model\_predictor.py
 
-│   ├── test\_prediction\_monitor.py
+â”‚   â”œâ”€â”€ test\_prediction\_monitor.py
 
-│   └── test\_reference\_statistics.py
+â”‚   â””â”€â”€ test\_reference\_statistics.py
 
-│
+â”‚
 
-├── models/
+â”œâ”€â”€ models/
 
-│   ├── final\_xgboost\_pipeline.pkl
+â”‚   â”œâ”€â”€ final\_xgboost\_pipeline.pkl
 
-│   ├── churn\_threshold.pkl
+â”‚   â”œâ”€â”€ churn\_threshold.pkl
 
-│   └── model\_metadata.json
+â”‚   â””â”€â”€ model\_metadata.json
 
-│
+â”‚
 
-├── Dockerfile
+â”œâ”€â”€ Dockerfile
 
-├── Dockerfile.streamlit
+â”œâ”€â”€ Dockerfile.streamlit
 
-├── docker-compose.yml
+â”œâ”€â”€ docker-compose.yml
 
-├── requirements.txt
+â”œâ”€â”€ requirements.txt
 
-├── pytest.ini
+â”œâ”€â”€ pytest.ini
 
-├── config.yaml
+â”œâ”€â”€ config.yaml
 
-├── .env.example
+â”œâ”€â”€ .env.example
 
-├── .dockerignore
+â”œâ”€â”€ .dockerignore
 
-├── .gitignore
+â”œâ”€â”€ .gitignore
 
-└── README.md
+â””â”€â”€ README.md
 
 ```
 
@@ -3424,7 +3424,7 @@ Customer-Churn-Production-ML-Pipeline/
 
 
 
-\## 49. Production Engineering Practices
+## 49. Production Engineering Practices
 
 
 
@@ -3492,7 +3492,7 @@ This project demonstrates practical machine learning engineering practices inclu
 
 
 
-\## 50. Production Limitations
+## 50. Production Limitations
 
 
 
@@ -3500,7 +3500,7 @@ Although this project follows production-oriented practices, it is important to 
 
 
 
-\### 50.1 No Application Load Balancer
+### 50.1 No Application Load Balancer
 
 
 
@@ -3516,11 +3516,11 @@ A production architecture should normally use:
 
 Internet
 
-&#x20;  ↓
+&#x20;  â†“
 
 Application Load Balancer
 
-&#x20;  ↓
+&#x20;  â†“
 
 ECS Fargate
 
@@ -3528,7 +3528,7 @@ ECS Fargate
 
 
 
-\### 50.2 No HTTPS/TLS Termination
+### 50.2 No HTTPS/TLS Termination
 
 
 
@@ -3540,7 +3540,7 @@ A production deployment should provide secure HTTPS access.
 
 
 
-\### 50.3 Ephemeral ECS Public IP
+### 50.3 Ephemeral ECS Public IP
 
 
 
@@ -3556,7 +3556,7 @@ A stable production endpoint would normally use an Application Load Balancer and
 
 
 
-\### 50.4 Prediction Logs Are Not Persistent
+### 50.4 Prediction Logs Are Not Persistent
 
 
 
@@ -3592,7 +3592,7 @@ or another centralized persistence/observability solution.
 
 
 
-\### 50.5 Lightweight Drift Detection
+### 50.5 Lightweight Drift Detection
 
 
 
@@ -3618,7 +3618,7 @@ A production system could use:
 
 
 
-\### 50.6 No Automated Model Retraining
+### 50.6 No Automated Model Retraining
 
 
 
@@ -3634,23 +3634,23 @@ A future workflow could be:
 
 Drift Detected
 
-&#x20;     ↓
+&#x20;     â†“
 
 Trigger Retraining
 
-&#x20;     ↓
+&#x20;     â†“
 
 Evaluate Model
 
-&#x20;     ↓
+&#x20;     â†“
 
 Register Model
 
-&#x20;     ↓
+&#x20;     â†“
 
 Approval
 
-&#x20;     ↓
+&#x20;     â†“
 
 Deploy
 
@@ -3658,7 +3658,7 @@ Deploy
 
 
 
-\### 50.7 No Centralized MLflow Model Registry
+### 50.7 No Centralized MLflow Model Registry
 
 
 
@@ -3670,7 +3670,7 @@ A centralized model registry is not currently implemented.
 
 
 
-\### 50.8 No Automated AWS Deployment on Every Commit
+### 50.8 No Automated AWS Deployment on Every Commit
 
 
 
@@ -3686,7 +3686,7 @@ The project does not automatically deploy every GitHub commit directly to ECS.
 
 
 
-\## 51. Future Improvements
+## 51. Future Improvements
 
 
 
@@ -3694,7 +3694,7 @@ Potential improvements include:
 
 
 
-\### Infrastructure
+### Infrastructure
 
 
 
@@ -3718,7 +3718,7 @@ Potential improvements include:
 
 
 
-\### Data \& Storage
+### Data & Storage
 
 
 
@@ -3734,7 +3734,7 @@ Potential improvements include:
 
 
 
-\### ML Operations
+### ML Operations
 
 
 
@@ -3754,7 +3754,7 @@ Potential improvements include:
 
 
 
-\### Monitoring
+### Monitoring
 
 
 
@@ -3772,7 +3772,7 @@ Potential improvements include:
 
 
 
-\### Deployment
+### Deployment
 
 
 
@@ -3788,7 +3788,7 @@ Potential improvements include:
 
 
 
-\### Security
+### Security
 
 
 
@@ -3810,11 +3810,11 @@ Potential improvements include:
 
 
 
-\## 52. Current Implementation Status
+## 52. Current Implementation Status
 
 
 
-\### 52.1 Data \& Analytics
+### 52.1 Data & Analytics
 
 
 
@@ -3834,7 +3834,7 @@ Potential improvements include:
 
 
 
-\### 52.2 Machine Learning
+### 52.2 Machine Learning
 
 
 
@@ -3858,7 +3858,7 @@ Potential improvements include:
 
 
 
-\### 52.3 MLOps
+### 52.3 MLOps
 
 
 
@@ -3872,7 +3872,7 @@ Potential improvements include:
 
 
 
-\### 52.4 API
+### 52.4 API
 
 
 
@@ -3898,7 +3898,7 @@ Potential improvements include:
 
 
 
-\### 52.5 Monitoring
+### 52.5 Monitoring
 
 
 
@@ -3918,7 +3918,7 @@ Potential improvements include:
 
 
 
-\### 52.6 Testing
+### 52.6 Testing
 
 
 
@@ -3940,7 +3940,7 @@ Potential improvements include:
 
 
 
-\### 52.7 Containerization
+### 52.7 Containerization
 
 
 
@@ -3956,7 +3956,7 @@ Potential improvements include:
 
 
 
-\### 52.8 Cloud Deployment
+### 52.8 Cloud Deployment
 
 
 
@@ -3982,7 +3982,7 @@ Potential improvements include:
 
 
 
-\### 52.9 Version Control \& CI
+### 52.9 Version Control & CI
 
 
 
@@ -4006,7 +4006,7 @@ Potential improvements include:
 
 
 
-\## 53. Key Portfolio Takeaways
+## 53. Key Portfolio Takeaways
 
 
 
@@ -4018,43 +4018,43 @@ This project demonstrates hands-on exposure to the complete machine learning lif
 
 Data
 
-&#x20;↓
+&#x20;â†“
 
 Analytics
 
-&#x20;↓
+&#x20;â†“
 
 Machine Learning
 
-&#x20;↓
+&#x20;â†“
 
 Experiment Tracking
 
-&#x20;↓
+&#x20;â†“
 
 Model Artifact
 
-&#x20;↓
+&#x20;â†“
 
 API
 
-&#x20;↓
+&#x20;â†“
 
 Testing
 
-&#x20;↓
+&#x20;â†“
 
 Docker
 
-&#x20;↓
+&#x20;â†“
 
 AWS
 
-&#x20;↓
+&#x20;â†“
 
 Monitoring
 
-&#x20;↓
+&#x20;â†“
 
 Drift Detection
 
@@ -4112,7 +4112,7 @@ The strongest engineering capabilities demonstrated include:
 
 
 
-\## 54. Why This Project Is Different from a Traditional ML Project
+## 54. Why This Project Is Different from a Traditional ML Project
 
 
 
@@ -4124,15 +4124,15 @@ A traditional churn project might look like:
 
 CSV
 
-&#x20;↓
+&#x20;â†“
 
 Jupyter Notebook
 
-&#x20;↓
+&#x20;â†“
 
 Model
 
-&#x20;↓
+&#x20;â†“
 
 Accuracy
 
@@ -4148,79 +4148,79 @@ This project extends the workflow into:
 
 Customer Data
 
-&#x20;     ↓
+&#x20;     â†“
 
 Data Validation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Data Cleaning
 
-&#x20;     ↓
+&#x20;     â†“
 
 Feature Engineering
 
-&#x20;     ↓
+&#x20;     â†“
 
 Statistical Analysis
 
-&#x20;     ↓
+&#x20;     â†“
 
 ML Pipeline
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Training
 
-&#x20;     ↓
+&#x20;     â†“
 
 Cross Validation
 
-&#x20;     ↓
+&#x20;     â†“
 
 Hyperparameter Tuning
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Evaluation
 
-&#x20;     ↓
+&#x20;     â†“
 
 MLflow
 
-&#x20;     ↓
+&#x20;     â†“
 
 Model Artifact
 
-&#x20;     ↓
+&#x20;     â†“
 
 FastAPI
 
-&#x20;     ↓
+&#x20;     â†“
 
 Automated Tests
 
-&#x20;     ↓
+&#x20;     â†“
 
 Docker
 
-&#x20;     ↓
+&#x20;     â†“
 
 Amazon ECR
 
-&#x20;     ↓
+&#x20;     â†“
 
 Amazon ECS Fargate
 
-&#x20;     ↓
+&#x20;     â†“
 
 CloudWatch
 
-&#x20;     ↓
+&#x20;     â†“
 
 Prediction Monitoring
 
-&#x20;     ↓
+&#x20;     â†“
 
 Feature Drift Detection
 
@@ -4236,11 +4236,11 @@ The project therefore focuses not only on building a model, but also on demonstr
 
 
 
-\## 55. Running Locally
+## 55. Running Locally
 
 
 
-\### 55.1 Clone Repository
+### 55.1 Clone Repository
 
 
 
@@ -4254,7 +4254,7 @@ cd Customer-Churn-Production-ML-Pipeline
 
 
 
-\### 55.2 Create Python 3.10 Virtual Environment
+### 55.2 Create Python 3.10 Virtual Environment
 
 
 
@@ -4306,7 +4306,7 @@ Python 3.10.x
 
 
 
-\### 55.3 Install Dependencies
+### 55.3 Install Dependencies
 
 
 
@@ -4318,7 +4318,7 @@ pip install -r requirements.txt
 
 
 
-\### 55.4 Run Tests
+### 55.4 Run Tests
 
 
 
@@ -4346,7 +4346,7 @@ Expected final result:
 
 
 
-\## 56. Running FastAPI Locally
+## 56. Running FastAPI Locally
 
 
 
@@ -4414,7 +4414,7 @@ http://localhost:8000/ready
 
 
 
-\## 57. Running Streamlit Locally
+## 57. Running Streamlit Locally
 
 
 
@@ -4446,7 +4446,7 @@ http://localhost:8501
 
 
 
-\## 58. Running with Docker Compose
+## 58. Running with Docker Compose
 
 
 
@@ -4514,7 +4514,7 @@ docker compose down
 
 
 
-\## 59. Example Prediction Workflow
+## 59. Example Prediction Workflow
 
 
 
@@ -4522,69 +4522,69 @@ docker compose down
 
 Client
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  │ POST /predict
+&#x20;  â”‚ POST /predict
 
-&#x20;  ▼
+&#x20;  â–¼
 
 FastAPI
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Pydantic Validation
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Data Validation
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Data Cleaning
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Feature Engineering
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 XGBoost Pipeline
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Churn Probability
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Classification Threshold
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ▼
+&#x20;  â–¼
 
 Prediction Response
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  ├───────────────► Request Logs
+&#x20;  â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Request Logs
 
-&#x20;  │
+&#x20;  â”‚
 
-&#x20;  └───────────────► Prediction Monitoring
+&#x20;  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â–º Prediction Monitoring
 
 ```
 
@@ -4594,11 +4594,11 @@ Prediction Response
 
 
 
-\## 60. Example Prediction
+## 60. Example Prediction
 
 
 
-\### Input
+### Input
 
 
 
@@ -4606,15 +4606,15 @@ Prediction Response
 
 Customer Information
 
-&#x20;       ↓
+&#x20;       â†“
 
 FastAPI /predict
 
-&#x20;       ↓
+&#x20;       â†“
 
 Feature Engineering
 
-&#x20;       ↓
+&#x20;       â†“
 
 XGBoost
 
@@ -4622,7 +4622,7 @@ XGBoost
 
 
 
-\### Output
+### Output
 
 
 
@@ -4674,7 +4674,7 @@ Threshold:
 
 
 
-\## 61. Security \& Credential Handling
+## 61. Security & Credential Handling
 
 
 
@@ -4714,7 +4714,7 @@ secrets/
 
 
 
-\## 62. Project Verification Summary
+## 62. Project Verification Summary
 
 
 
@@ -4722,7 +4722,7 @@ The completed system was verified at multiple levels.
 
 
 
-\### Local Application
+### Local Application
 
 
 
@@ -4730,21 +4730,21 @@ The completed system was verified at multiple levels.
 
 FastAPI
 
-✓ Health
+âœ“ Health
 
-✓ Readiness
+âœ“ Readiness
 
-✓ Prediction
+âœ“ Prediction
 
-✓ Monitoring
+âœ“ Monitoring
 
-✓ Drift
+âœ“ Drift
 
 ```
 
 
 
-\### Automated Testing
+### Automated Testing
 
 
 
@@ -4756,67 +4756,67 @@ FastAPI
 
 
 
-\### Docker
+### Docker
 
 
 
 ```text
 
-✓ API container
+âœ“ API container
 
-✓ Streamlit container
+âœ“ Streamlit container
 
-✓ Docker Compose
+âœ“ Docker Compose
 
-✓ Health check
+âœ“ Health check
 
 ```
 
 
 
-\### AWS
+### AWS
 
 
 
 ```text
 
-✓ ECR image
+âœ“ ECR image
 
-✓ ECS Fargate task
+âœ“ ECS Fargate task
 
-✓ IAM execution role
+âœ“ IAM execution role
 
-✓ CloudWatch Logs
+âœ“ CloudWatch Logs
 
-✓ Health endpoint
+âœ“ Health endpoint
 
-✓ Readiness endpoint
+âœ“ Readiness endpoint
 
-✓ Prediction endpoint
+âœ“ Prediction endpoint
 
-✓ Monitoring endpoint
+âœ“ Monitoring endpoint
 
-✓ Drift endpoint
+âœ“ Drift endpoint
 
 ```
 
 
 
-\### GitHub
+### GitHub
 
 
 
 ```text
 
-✓ Repository
+âœ“ Repository
 
-✓ Git history
+âœ“ Git history
 
-✓ Secret scan
+âœ“ Secret scan
 
-✓ GitHub Actions
+âœ“ GitHub Actions
 
-✓ Clean working tree
+âœ“ Clean working tree
 
 ```
 
@@ -4826,11 +4826,11 @@ FastAPI
 
 
 
-\## 63. Repository
+## 63. Repository
 
 
 
-\### GitHub Repository
+### GitHub Repository
 
 
 
@@ -4842,7 +4842,7 @@ FastAPI
 
 
 
-\## 64. Author
+## 64. Author
 
 
 
@@ -4858,7 +4858,7 @@ Data Science | Machine Learning | Python | SQL | MLOps | Cloud Deployment
 
 
 
-\## 65. Project Status
+## 65. Project Status
 
 
 
@@ -4876,53 +4876,53 @@ Implemented and verified:
 
 ```text
 
-✓ Machine Learning Pipeline
+âœ“ Machine Learning Pipeline
 
-✓ XGBoost Model
+âœ“ XGBoost Model
 
-✓ Cross Validation
+âœ“ Cross Validation
 
-✓ Hyperparameter Optimization
+âœ“ Hyperparameter Optimization
 
-✓ MLflow Experiment Tracking
+âœ“ MLflow Experiment Tracking
 
-✓ Model Artifact Management
+âœ“ Model Artifact Management
 
-✓ FastAPI API
+âœ“ FastAPI API
 
-✓ Pydantic Validation
+âœ“ Pydantic Validation
 
-✓ Request ID Tracing
+âœ“ Request ID Tracing
 
-✓ Structured Logging
+âœ“ Structured Logging
 
-✓ Prediction Monitoring
+âœ“ Prediction Monitoring
 
-✓ Feature Drift Detection
+âœ“ Feature Drift Detection
 
-✓ Automated Testing
+âœ“ Automated Testing
 
-✓ Docker
+âœ“ Docker
 
-✓ Docker Compose
+âœ“ Docker Compose
 
-✓ Streamlit Interface
+âœ“ Streamlit Interface
 
-✓ GitHub Actions
+âœ“ GitHub Actions
 
-✓ Amazon ECR
+âœ“ Amazon ECR
 
-✓ Amazon ECS Fargate
+âœ“ Amazon ECS Fargate
 
-✓ IAM
+âœ“ IAM
 
-✓ CloudWatch Logs
+âœ“ CloudWatch Logs
 
-✓ AWS API Verification
+âœ“ AWS API Verification
 
-✓ Complete Architecture Documentation
+âœ“ Complete Architecture Documentation
 
-✓ GitHub Repository Cleanup
+âœ“ GitHub Repository Cleanup
 
 ```
 
@@ -4932,11 +4932,12 @@ Implemented and verified:
 
 
 
-\## 66. License
+## 66. License
 
 
 
 This project is intended for educational, portfolio, and demonstration purposes.
+
 
 
 
