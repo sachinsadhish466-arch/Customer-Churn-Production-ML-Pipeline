@@ -227,8 +227,7 @@ Amazon ECS Fargate
 * NumPy
 * SciPy
 * SQL
-* SQLAlchemy
-* PyMySQL
+* MySQL
 
 ### 5.2 Machine Learning
 
