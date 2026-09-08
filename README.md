@@ -1,6 +1,10 @@
 # Customer Churn Prediction – Production ML Pipeline
 
 <p align="center">
+  <img src="docs/project_thumbnail.png" alt="Customer Churn Prediction Production ML Pipeline" width="100%">
+</p>
+
+<p align="center">
   <img src="docs/architecture.png" alt="Customer Churn Production ML Pipeline Complete Architecture" width="100%">
 </p>
 
