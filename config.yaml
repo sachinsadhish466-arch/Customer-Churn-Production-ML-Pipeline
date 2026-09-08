@@ -1,20 +1,32 @@
+# ============================================================
+# Customer Churn Production ML Pipeline
+# Application Configuration
+# ============================================================
+
+
+# ------------------------------------------------------------
+# Project Configuration
+# ------------------------------------------------------------
+
 project:
   name: customer-churn-production-ml-pipeline
-  version: "1.0.0"
+  version: 1.0.0
 
-data:
-  raw_path: data/raw/telco_customer_churn.csv
-  processed_path: data/processed/telco_customer_churn_features.csv
+
+# ------------------------------------------------------------
+# Model Configuration
+# ------------------------------------------------------------
 
 model:
-  type: xgboost
   path: models/final_xgboost_pipeline.pkl
   threshold_path: models/churn_threshold.pkl
-  metadata_path: models/model_metadata.json
 
-api:
-  host: 0.0.0.0
-  port: 8000
 
-streamlit:
-  port: 8501
+# ------------------------------------------------------------
+# Monitoring Configuration
+# ------------------------------------------------------------
+
+monitoring:
+  reference_statistics_path: models/reference_statistics.csv
+  current_data_path: data/monitoring/simulated_production_batch.csv
+  drift_threshold: 0.20

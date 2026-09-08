@@ -10,6 +10,7 @@ COPY api ./api
 COPY src ./src
 COPY models ./models
 COPY config.yaml ./config.yaml
+COPY data/monitoring ./data/monitoring
 
 EXPOSE 8000
 

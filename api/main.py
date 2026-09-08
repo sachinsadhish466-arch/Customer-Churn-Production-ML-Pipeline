@@ -6,11 +6,13 @@ import pandas as pd
 from api.schemas import (
     CustomerData,
     PredictionResponse,
-    MonitoringResponse
+    MonitoringResponse,
+    DriftResponse
 )
 
 from src.pipeline import ChurnPipeline
 
+from src.utils.config_loader import load_config
 from src.utils.logger import get_logger
 from src.utils.request_id import generate_request_id
 
@@ -21,6 +23,26 @@ from src.monitoring.prediction_monitor import (
     calculate_monitoring_metrics
 )
 
+from src.monitoring.reference_statistics import (
+    load_reference_statistics
+)
+
+from src.monitoring.drift_monitor import (
+    calculate_drift_from_reference_statistics,
+    create_drift_report
+)
+
+
+# ---------------------------------------------------------
+# Application Configuration
+# ---------------------------------------------------------
+
+CONFIG = load_config()
+
+
+# ---------------------------------------------------------
+# FastAPI Application
+# ---------------------------------------------------------
 
 app = FastAPI(
     title="Customer Churn Prediction API",
@@ -31,6 +53,10 @@ app = FastAPI(
 
 logger = get_logger(__name__)
 
+
+# ---------------------------------------------------------
+# Request ID Middleware
+# ---------------------------------------------------------
 
 @app.middleware("http")
 async def add_request_id(
@@ -73,6 +99,10 @@ async def add_request_id(
         raise
 
 
+# ---------------------------------------------------------
+# Global Pipeline
+# ---------------------------------------------------------
+
 churn_pipeline = None
 
 
@@ -91,6 +121,10 @@ def get_churn_pipeline():
     return churn_pipeline
 
 
+# ---------------------------------------------------------
+# Health Endpoint
+# ---------------------------------------------------------
+
 @app.get("/health")
 def health_check():
 
@@ -103,6 +137,10 @@ def health_check():
         "service": "customer-churn-prediction-api"
     }
 
+
+# ---------------------------------------------------------
+# Prediction Monitoring Endpoint
+# ---------------------------------------------------------
 
 @app.get(
     "/monitoring",
@@ -132,7 +170,10 @@ def monitoring_metrics(
         )
 
         logger.info(
-            "Monitoring metrics calculated | request_id=%s | total_predictions=%s | churn_predictions=%s",
+            "Monitoring metrics calculated | "
+            "request_id=%s | "
+            "total_predictions=%s | "
+            "churn_predictions=%s",
             request_id,
             metrics["total_predictions"],
             metrics["churn_predictions"]
@@ -152,11 +193,155 @@ def monitoring_metrics(
         raise HTTPException(
             status_code=500,
             detail={
-                "message": "Monitoring service encountered an internal error.",
+                "message": (
+                    "Monitoring service encountered "
+                    "an internal error."
+                ),
                 "request_id": request_id
             }
         )
 
+
+# ---------------------------------------------------------
+# Data Drift Monitoring Endpoint
+# ---------------------------------------------------------
+
+@app.get(
+    "/drift",
+    response_model=DriftResponse
+)
+def drift_metrics(
+    request: Request
+):
+
+    request_id = getattr(
+        request.state,
+        "request_id",
+        "unknown"
+    )
+
+    logger.info(
+        "Drift monitoring requested | request_id=%s",
+        request_id
+    )
+
+    try:
+
+        # -------------------------------------------------
+        # Read monitoring configuration
+        # -------------------------------------------------
+
+        reference_statistics_path = (
+            CONFIG["monitoring"]
+            ["reference_statistics_path"]
+        )
+
+        current_data_path = (
+            CONFIG["monitoring"]
+            ["current_data_path"]
+        )
+
+        drift_threshold = float(
+            CONFIG["monitoring"]
+            ["drift_threshold"]
+        )
+
+        logger.info(
+            "Drift configuration loaded | "
+            "request_id=%s | "
+            "reference=%s | "
+            "current=%s | "
+            "threshold=%s",
+            request_id,
+            reference_statistics_path,
+            current_data_path,
+            drift_threshold
+        )
+
+        # -------------------------------------------------
+        # Load reference statistics
+        # -------------------------------------------------
+
+        reference_stats = (
+            load_reference_statistics()
+        )
+
+        # -------------------------------------------------
+        # Load current monitoring data
+        # -------------------------------------------------
+
+        current_df = pd.read_csv(
+            current_data_path
+        )
+
+        # -------------------------------------------------
+        # Numerical features being monitored
+        # -------------------------------------------------
+
+        numeric_features = [
+            "tenure",
+            "MonthlyCharges",
+            "TotalCharges",
+            "AverageMonthlySpend"
+        ]
+
+        # -------------------------------------------------
+        # Calculate feature-level drift
+        # -------------------------------------------------
+
+        drift_results = (
+            calculate_drift_from_reference_statistics(
+                reference_stats_df=reference_stats,
+                current_df=current_df,
+                columns=numeric_features,
+                threshold=drift_threshold
+            )
+        )
+
+        # -------------------------------------------------
+        # Create overall drift report
+        # -------------------------------------------------
+
+        report = create_drift_report(
+            drift_results
+        )
+
+        logger.info(
+            "Drift monitoring completed | "
+            "request_id=%s | "
+            "overall_drift=%s | "
+            "drifted_features=%s",
+            request_id,
+            report["overall_drift_detected"],
+            report["drifted_features"]
+        )
+
+        return DriftResponse(
+            **report
+        )
+
+    except Exception:
+
+        logger.exception(
+            "Drift monitoring failed | request_id=%s",
+            request_id
+        )
+
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "message": (
+                    "Drift monitoring service "
+                    "encountered an internal error."
+                ),
+                "request_id": request_id
+            }
+        )
+
+
+# ---------------------------------------------------------
+# Prediction Endpoint
+# ---------------------------------------------------------
 
 @app.post(
     "/predict",
@@ -188,7 +373,9 @@ def predict_churn(
             [customer_data]
         )
 
-        prediction_start_time = time.perf_counter()
+        prediction_start_time = (
+            time.perf_counter()
+        )
 
         predictions, probabilities = (
             pipeline.predict(input_df)
@@ -214,7 +401,12 @@ def predict_churn(
         )
 
         logger.info(
-            "Prediction completed | request_id=%s | prediction=%s | probability=%.4f | latency_ms=%.2f | label=%s",
+            "Prediction completed | "
+            "request_id=%s | "
+            "prediction=%s | "
+            "probability=%.4f | "
+            "latency_ms=%.2f | "
+            "label=%s",
             request_id,
             prediction,
             probability,
@@ -258,7 +450,10 @@ def predict_churn(
         raise HTTPException(
             status_code=500,
             detail={
-                "message": "Prediction service encountered an internal error.",
+                "message": (
+                    "Prediction service encountered "
+                    "an internal error."
+                ),
                 "request_id": request_id
             }
         )
