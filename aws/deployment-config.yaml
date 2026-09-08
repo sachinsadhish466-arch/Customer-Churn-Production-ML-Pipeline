@@ -1,0 +1,132 @@
+# ============================================================
+# Customer Churn Production ML Pipeline
+# AWS Deployment Configuration
+# ============================================================
+
+project:
+  name: customer-churn-production-ml-pipeline
+  application: customer-churn-api
+
+# ------------------------------------------------------------
+# AWS Account / Region
+# ------------------------------------------------------------
+
+aws:
+  region: "<AWS_REGION>"
+  account_id: "<AWS_ACCOUNT_ID>"
+
+# ------------------------------------------------------------
+# Amazon ECR
+# ------------------------------------------------------------
+
+ecr:
+  repository_name: "customer-churn-api"
+
+  image:
+    name: "customer-churn-api"
+    tag: "latest"
+
+# ------------------------------------------------------------
+# Amazon ECS Fargate
+# ------------------------------------------------------------
+
+ecs:
+  cluster_name: "customer-churn-cluster"
+
+  service_name: "customer-churn-api-service"
+
+  task_definition_family: "customer-churn-api"
+
+  launch_type: "FARGATE"
+
+  cpu: 512
+
+  memory: 1024
+
+  desired_count: 1
+
+  container:
+    name: "customer-churn-api"
+    port: 8000
+
+# ------------------------------------------------------------
+# Application
+# ------------------------------------------------------------
+
+application:
+  container_port: 8000
+
+  health_check:
+    path: "/health"
+    interval_seconds: 30
+    timeout_seconds: 10
+    retries: 3
+
+# ------------------------------------------------------------
+# Amazon CloudWatch
+# ------------------------------------------------------------
+
+cloudwatch:
+  log_group: "/ecs/customer-churn-api"
+
+  log_stream_prefix: "ecs"
+
+# ------------------------------------------------------------
+# Amazon S3
+# ------------------------------------------------------------
+
+s3:
+  bucket_name: "<S3_BUCKET_NAME>"
+
+  paths:
+    models: "models/"
+    monitoring: "monitoring/"
+    reports: "reports/"
+
+# ------------------------------------------------------------
+# API Gateway
+# ------------------------------------------------------------
+
+api_gateway:
+  api_name: "customer-churn-api-gateway"
+
+  integration_target: "ECS_FARGATE"
+
+# ------------------------------------------------------------
+# Deployment
+# ------------------------------------------------------------
+
+deployment:
+  strategy: "rolling"
+
+  minimum_healthy_percent: 100
+
+  maximum_percent: 200
+
+  automatic_rollback: true
+
+# ------------------------------------------------------------
+# Security
+# ------------------------------------------------------------
+
+security:
+  secrets_in_repository: false
+
+  use_github_oidc: true
+
+  use_https: true
+
+  public_database_access: false
+
+# ------------------------------------------------------------
+# Environment
+# ------------------------------------------------------------
+
+environment:
+  name: "production"
+
+  python_version: "3.10"
+
+  application_framework: "FastAPI"
+
+  container_runtime: "Docker"
