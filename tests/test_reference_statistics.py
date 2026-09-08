@@ -1,12 +1,39 @@
 import pandas as pd
+import pytest
 
+import src.monitoring.reference_statistics as reference_statistics
 from src.monitoring.reference_statistics import (
     NUMERIC_FEATURES,
     create_reference_statistics
 )
 
 
-def test_reference_statistics_structure():
+@pytest.fixture
+def reference_dataset(tmp_path, monkeypatch):
+    test_data = pd.DataFrame({
+        "tenure": [1, 12, 24, 36, 48],
+        "MonthlyCharges": [30.0, 50.0, 70.0, 80.0, 100.0],
+        "TotalCharges": [30.0, 600.0, 1680.0, 2880.0, 4800.0],
+        "AverageMonthlySpend": [30.0, 50.0, 70.0, 80.0, 100.0]
+    })
+
+    dataset_path = tmp_path / "telco_customer_churn_features.csv"
+
+    test_data.to_csv(
+        dataset_path,
+        index=False
+    )
+
+    monkeypatch.setattr(
+        reference_statistics,
+        "REFERENCE_DATASET_PATH",
+        dataset_path
+    )
+
+    return test_data
+
+
+def test_reference_statistics_structure(reference_dataset):
 
     stats_df = create_reference_statistics()
 
@@ -30,7 +57,7 @@ def test_reference_statistics_structure():
     }
 
 
-def test_reference_statistics_values():
+def test_reference_statistics_values(reference_dataset):
 
     stats_df = create_reference_statistics()
 
@@ -56,7 +83,7 @@ def test_reference_statistics_values():
     )
 
 
-def test_reference_statistics_features():
+def test_reference_statistics_features(reference_dataset):
 
     stats_df = create_reference_statistics()
 
